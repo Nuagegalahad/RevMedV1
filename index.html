@@ -15,9 +15,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <style>
-    /* ============================================================
-       CSS EXACT DE VOTRE ANCIEN SITE (recopié depuis le fichier joint)
-       ============================================================ */
+
     :root {
       --cream: #FFF8F0;
       --coral: #E05A5A;
@@ -895,10 +893,7 @@
   const db = firebase.database();
   const dataRef = db.ref('/data');
 
-  // ================================================================
-  // 2. DONNÉES INITIALES (LES 156 CHAPITRES AVEC LEURS STATUTS)
-  //    Extraites du fichier joint "Ma Révision Médicale (1).html"
-  // ================================================================
+
   const DEFAULT_CHAPTERS = [
     // ---- Cardiologie (13, 0 révisés) ----
     { name: "HTA essentielle", theme: "Cardiologie", done: false },
