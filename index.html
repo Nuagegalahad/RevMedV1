@@ -5,40 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Ma Révision Médicale</title>
 
-  <!-- Firebase SDK (compat) -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <style>
-    /* === Tout le style === */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ===== STYLE IDENTIQUE À L'ANCIEN SITE ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      background: #f4f6fa;
-      color: #1e2a3a;
-      padding: 16px;
-      max-width: 800px;
-      margin: 0 auto;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #f1f3f8;
+      color: #1a1f2e;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
       min-height: 100vh;
     }
+
     .content {
-      background: white;
-      border-radius: 32px;
-      padding: 24px 20px 32px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+      max-width: 700px;
+      width: 100%;
     }
-    .header { margin-bottom: 24px; }
+
+    /* HEADER */
+    .header {
+      margin-bottom: 24px;
+    }
     .header h1 {
-      font-size: 1.9rem;
+      font-size: 2rem;
       font-weight: 700;
       letter-spacing: -0.02em;
-      background: linear-gradient(145deg, #1e2a3a 0%, #2c3e50 100%);
+      background: linear-gradient(145deg, #1a1f2e 0%, #2c3e50 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      margin-bottom: 2px;
     }
-    .header-sub { font-size: 0.9rem; color: #6b7a8f; margin-top: 4px; font-weight: 500; }
+    .header-sub {
+      font-size: 0.9rem;
+      color: #6b7a8f;
+      font-weight: 500;
+    }
 
+    /* STATS */
     .stats-row {
       display: flex;
       gap: 12px;
@@ -51,13 +65,29 @@
       padding: 14px 10px;
       text-align: center;
       border: 1px solid #eef2f9;
+      transition: transform 0.2s;
     }
-    .stat-num { font-size: 1.8rem; font-weight: 700; line-height: 1.2; }
-    .stat-card.total .stat-num { color: #2c3e50; }
+    .stat-card:hover {
+      transform: translateY(-2px);
+    }
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .stat-card.total .stat-num { color: #1a1f2e; }
     .stat-card.done .stat-num { color: #2a9d8f; }
     .stat-card.left .stat-num { color: #e76f51; }
-    .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.03em; color: #6b7a8f; margin-top: 4px; }
+    .stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #6b7a8f;
+      margin-top: 4px;
+      font-weight: 600;
+    }
 
+    /* PROGRESS RING */
     .progress-section {
       display: flex;
       align-items: center;
@@ -65,26 +95,73 @@
       background: #f8faff;
       border-radius: 28px;
       padding: 16px 20px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       border: 1px solid #eef2f9;
+      transition: box-shadow 0.3s;
     }
-    .ring-wrap { position: relative; width: 90px; height: 90px; flex-shrink: 0; }
-    .ring-wrap svg { transform: rotate(-90deg); }
-    .ring-bg { fill: none; stroke: #e6edf6; stroke-width: 7; }
-    .ring-fill { fill: none; stroke: url(#ringGrad); stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 0.5s ease; }
-    .ring-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 600; }
-    .ring-pct { font-size: 1.2rem; line-height: 1.2; }
-    .ring-sub { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.04em; color: #6b7a8f; }
-    .progress-msg { flex: 1; }
-    .msg-title { font-weight: 700; font-size: 1.1rem; }
-    .msg-sub { font-size: 0.85rem; color: #6b7a8f; }
+    .ring-wrap {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      flex-shrink: 0;
+    }
+    .ring-wrap svg {
+      transform: rotate(-90deg);
+    }
+    .ring-bg {
+      fill: none;
+      stroke: #e6edf6;
+      stroke-width: 7;
+    }
+    .ring-fill {
+      fill: none;
+      stroke: url(#ringGrad);
+      stroke-width: 7;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ring-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+    .ring-pct {
+      font-size: 1.2rem;
+      line-height: 1.2;
+      color: #1a1f2e;
+    }
+    .ring-sub {
+      font-size: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #6b7a8f;
+      font-weight: 600;
+    }
+    .progress-msg {
+      flex: 1;
+    }
+    .msg-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #1a1f2e;
+    }
+    .msg-sub {
+      font-size: 0.85rem;
+      color: #6b7a8f;
+    }
 
+    /* RÉCOMPENSES (NOUVEAU) */
     .rewards-section {
       background: #fcf9f0;
       border-radius: 20px;
       padding: 16px 18px;
       margin-bottom: 24px;
       border: 1px solid #f0ead8;
+      transition: box-shadow 0.3s;
     }
     .rewards-title {
       font-weight: 700;
@@ -97,8 +174,8 @@
     .rewards-title span:last-child {
       background: #2a9d8f;
       color: white;
-      font-size: 0.75rem;
-      padding: 2px 12px;
+      font-size: 0.7rem;
+      padding: 3px 14px;
       border-radius: 30px;
       font-weight: 600;
     }
@@ -110,7 +187,9 @@
       border-bottom: 1px solid #eee6d4;
       font-size: 0.9rem;
     }
-    .reward-item:last-child { border-bottom: none; }
+    .reward-item:last-child {
+      border-bottom: none;
+    }
     .reward-badge {
       width: 28px;
       height: 28px;
@@ -122,15 +201,38 @@
       font-size: 0.75rem;
       flex-shrink: 0;
     }
-    .reward-badge.locked { background: #eef2f9; color: #9aa9b9; }
-    .reward-badge.unlocked { background: #f4a261; color: white; }
-    .reward-info { flex: 1; }
-    .reward-amount { font-weight: 700; }
-    .reward-desc { font-size: 0.7rem; color: #6b7a8f; }
-    .reward-status { font-size: 0.7rem; font-weight: 600; }
-    .reward-status.locked { color: #9aa9b9; }
-    .reward-status.unlocked { color: #2a9d8f; }
+    .reward-badge.locked {
+      background: #eef2f9;
+      color: #9aa9b9;
+    }
+    .reward-badge.unlocked {
+      background: #f4a261;
+      color: white;
+      box-shadow: 0 2px 8px rgba(244, 162, 97, 0.3);
+    }
+    .reward-info {
+      flex: 1;
+    }
+    .reward-amount {
+      font-weight: 700;
+      color: #1a1f2e;
+    }
+    .reward-desc {
+      font-size: 0.7rem;
+      color: #6b7a8f;
+    }
+    .reward-status {
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    .reward-status.locked {
+      color: #9aa9b9;
+    }
+    .reward-status.unlocked {
+      color: #2a9d8f;
+    }
 
+    /* CONGRATS BANNER */
     .congrats-banner {
       display: none;
       background: #2a9d8f;
@@ -140,15 +242,22 @@
       border-radius: 40px;
       text-align: center;
       margin-bottom: 20px;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 12px rgba(42, 157, 143, 0.25);
+      animation: fadeSlide 0.5s ease;
     }
-    .congrats-banner.show { display: block; }
+    .congrats-banner.show {
+      display: block;
+    }
 
+    /* ADD CARD */
     .add-card {
       background: #f8faff;
       border-radius: 24px;
       padding: 12px 16px;
       margin-bottom: 20px;
       border: 1px solid #eef2f9;
+      transition: border 0.2s;
     }
     .add-toggle {
       display: flex;
@@ -156,6 +265,7 @@
       gap: 12px;
       cursor: pointer;
       user-select: none;
+      padding: 4px 0;
     }
     .add-toggle .icon-wrap {
       width: 32px;
@@ -166,16 +276,47 @@
       align-items: center;
       justify-content: center;
       font-weight: 600;
-      font-size: 1.3rem;
-      color: #2c3e50;
+      font-size: 1.4rem;
+      color: #1a1f2e;
+      transition: background 0.2s;
     }
-    .add-toggle .label { flex: 1; font-weight: 500; }
-    .add-toggle .chevron { color: #9aa9b9; transition: transform 0.2s; }
-    .add-toggle.open .chevron { transform: rotate(180deg); }
-    .add-form { display: none; padding-top: 16px; flex-direction: column; gap: 12px; }
-    .add-form.open { display: flex; }
-    .field-group { display: flex; flex-direction: column; gap: 4px; }
-    .field-label { font-size: 0.8rem; font-weight: 500; color: #4a5a6e; }
+    .add-toggle:hover .icon-wrap {
+      background: #dce3ef;
+    }
+    .add-toggle .label {
+      flex: 1;
+      font-weight: 500;
+      color: #1a1f2e;
+    }
+    .add-toggle .chevron {
+      color: #9aa9b9;
+      transition: transform 0.3s;
+      font-size: 0.8rem;
+    }
+    .add-toggle.open .chevron {
+      transform: rotate(180deg);
+    }
+    .add-form {
+      display: none;
+      padding-top: 16px;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .add-form.open {
+      display: flex;
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .field-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4a5a6e;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
     .field-group input {
       padding: 10px 14px;
       border-radius: 16px;
@@ -183,11 +324,15 @@
       background: white;
       font-size: 0.95rem;
       outline: none;
-      transition: border 0.2s;
+      transition: border 0.2s, box-shadow 0.2s;
+      font-family: inherit;
     }
-    .field-group input:focus { border-color: #7b8ba0; }
+    .field-group input:focus {
+      border-color: #7b8ba0;
+      box-shadow: 0 0 0 3px rgba(123, 139, 160, 0.1);
+    }
     .btn-add {
-      background: #2c3e50;
+      background: #1a1f2e;
       color: white;
       border: none;
       padding: 12px;
@@ -195,13 +340,30 @@
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.1s;
+      font-family: inherit;
       margin-top: 4px;
     }
-    .btn-add:hover { background: #1e2a3a; }
+    .btn-add:hover {
+      background: #2c3e50;
+    }
+    .btn-add:active {
+      transform: scale(0.98);
+    }
 
-    .search-wrap { position: relative; margin-bottom: 16px; }
-    .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #9aa9b9; }
+    /* SEARCH */
+    .search-wrap {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9aa9b9;
+      font-size: 0.9rem;
+    }
     .search-wrap input {
       width: 100%;
       padding: 12px 16px 12px 44px;
@@ -210,9 +372,15 @@
       background: white;
       font-size: 0.95rem;
       outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+      font-family: inherit;
     }
-    .search-wrap input:focus { border-color: #7b8ba0; }
+    .search-wrap input:focus {
+      border-color: #7b8ba0;
+      box-shadow: 0 0 0 3px rgba(123, 139, 160, 0.08);
+    }
 
+    /* FILTER TABS */
     .filter-tabs {
       display: flex;
       gap: 8px;
@@ -220,7 +388,7 @@
       flex-wrap: wrap;
     }
     .filter-tab {
-      padding: 6px 16px;
+      padding: 6px 18px;
       border-radius: 30px;
       border: 1px solid #dce3ef;
       background: transparent;
@@ -228,22 +396,59 @@
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
+      font-family: inherit;
+      color: #4a5a6e;
     }
-    .filter-tab.active { background: #2c3e50; color: white; border-color: #2c3e50; }
-    .filter-tab:hover { background: #eef2f9; }
-    .filter-tab.active:hover { background: #1e2a3a; }
+    .filter-tab.active {
+      background: #1a1f2e;
+      color: white;
+      border-color: #1a1f2e;
+    }
+    .filter-tab:hover {
+      background: #eef2f9;
+    }
+    .filter-tab.active:hover {
+      background: #2c3e50;
+    }
 
-    .theme-section { margin-bottom: 24px; }
+    /* LIST */
+    .theme-section {
+      margin-bottom: 24px;
+    }
     .theme-header {
       display: flex;
       align-items: center;
       gap: 10px;
       margin-bottom: 8px;
+      padding: 0 4px;
     }
-    .theme-dot { width: 12px; height: 12px; border-radius: 20px; flex-shrink: 0; }
-    .theme-title { font-weight: 600; font-size: 1rem; }
-    .theme-badge { margin-left: auto; font-size: 0.75rem; background: #eef2f9; padding: 2px 12px; border-radius: 30px; font-weight: 500; }
-    .theme-card { background: #fafcff; border-radius: 20px; padding: 4px 0; border: 1px solid #eef2f9; }
+    .theme-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+    .theme-title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #1a1f2e;
+    }
+    .theme-badge {
+      margin-left: auto;
+      font-size: 0.75rem;
+      background: #eef2f9;
+      padding: 2px 12px;
+      border-radius: 30px;
+      font-weight: 600;
+      color: #4a5a6e;
+    }
+    .theme-card {
+      background: #fafcff;
+      border-radius: 20px;
+      padding: 4px 0;
+      border: 1px solid #eef2f9;
+      overflow: hidden;
+    }
 
     .chapter-item {
       display: flex;
@@ -253,8 +458,12 @@
       border-bottom: 1px solid #f0f4fc;
       transition: background 0.15s;
     }
-    .chapter-item:last-child { border-bottom: none; }
-    .chapter-item:hover { background: #f5f9ff; }
+    .chapter-item:last-child {
+      border-bottom: none;
+    }
+    .chapter-item:hover {
+      background: #f5f9ff;
+    }
     .custom-cb {
       width: 24px;
       height: 24px;
@@ -270,15 +479,39 @@
       color: white;
       background: white;
     }
-    .custom-cb.checked { background: #2a9d8f; border-color: #2a9d8f; }
-    .custom-cb.checked::after { content: "✓"; color: white; }
-    .chapter-name { flex: 1; font-weight: 500; font-size: 0.95rem; }
-    .chapter-name.done { text-decoration: line-through; color: #9aa9b9; }
-    .btn-actions { display: flex; gap: 4px; flex-shrink: 0; }
+    .custom-cb:hover {
+      border-color: #2a9d8f;
+      transform: scale(1.05);
+    }
+    .custom-cb.checked {
+      background: #2a9d8f;
+      border-color: #2a9d8f;
+      animation: pop 0.2s ease;
+    }
+    .custom-cb.checked::after {
+      content: "✓";
+      color: white;
+      font-weight: 700;
+    }
+    .chapter-name {
+      flex: 1;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #1a1f2e;
+    }
+    .chapter-name.done {
+      text-decoration: line-through;
+      color: #9aa9b9;
+    }
+    .btn-actions {
+      display: flex;
+      gap: 2px;
+      flex-shrink: 0;
+    }
     .btn-icon {
       background: transparent;
       border: none;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       padding: 4px 6px;
       border-radius: 30px;
       cursor: pointer;
@@ -286,9 +519,16 @@
       transition: background 0.2s, color 0.2s;
       line-height: 1;
     }
-    .btn-icon:hover { background: #eef2f9; color: #1e2a3a; }
-    .btn-icon.del:hover { color: #e76f51; }
+    .btn-icon:hover {
+      background: #eef2f9;
+      color: #1a1f2e;
+    }
+    .btn-icon.del:hover {
+      color: #e76f51;
+      background: #fef0ec;
+    }
 
+    /* TOAST */
     .toast-container {
       position: fixed;
       bottom: 24px;
@@ -299,39 +539,62 @@
       pointer-events: none;
     }
     .toast {
-      background: #1e2a3a;
+      background: #1a1f2e;
       color: white;
-      padding: 14px 24px;
+      padding: 14px 28px;
       border-radius: 40px;
       font-weight: 600;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
       pointer-events: auto;
       opacity: 0;
       transform: translateY(20px);
-      transition: opacity 0.3s, transform 0.3s;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      font-size: 0.95rem;
     }
-    .toast.show { opacity: 1; transform: translateY(0); }
-    .toast .highlight { color: #f4a261; }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .toast .highlight {
+      color: #f4a261;
+    }
 
+    /* ANIMATIONS */
+    @keyframes pop {
+      0% { transform: scale(0.8); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(-8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
     @media (max-width: 500px) {
-      .content { padding: 16px; }
+      body { padding: 12px; }
       .stats-row { gap: 6px; }
       .stat-card { padding: 10px 6px; }
       .stat-num { font-size: 1.4rem; }
-      .progress-section { flex-wrap: wrap; justify-content: center; }
+      .progress-section { flex-wrap: wrap; justify-content: center; gap: 12px; }
       .ring-wrap { width: 72px; height: 72px; }
       .ring-pct { font-size: 1rem; }
+      .header h1 { font-size: 1.6rem; }
+      .chapter-item { padding: 10px 12px; flex-wrap: wrap; }
+      .btn-actions { gap: 0; }
     }
   </style>
 </head>
 <body>
 
 <div class="content">
+  <!-- HEADER -->
   <header class="header">
     <h1>Ma Révision Médicale</h1>
     <div class="header-sub">Tableau de bord · 4ème année 2025/2026</div>
   </header>
 
+  <!-- STATS -->
   <div class="stats-row">
     <div class="stat-card total">
       <div class="stat-num" id="statTotal">0</div>
@@ -347,6 +610,7 @@
     </div>
   </div>
 
+  <!-- PROGRESS -->
   <div class="progress-section">
     <div class="ring-wrap">
       <svg viewBox="0 0 90 90" width="90" height="90">
@@ -370,7 +634,8 @@
     </div>
   </div>
 
-  <div class="rewards-section" id="rewardsSection">
+  <!-- RÉCOMPENSES -->
+  <div class="rewards-section">
     <div class="rewards-title">
       <span>🏆 Récompenses (100 €)</span>
       <span id="pointsDisplay">0 pts</span>
@@ -378,10 +643,12 @@
     <div id="rewardsList"></div>
   </div>
 
+  <!-- CONGRATS -->
   <div class="congrats-banner" id="congratsBanner">
     Bravo ! Tu as révisé tous les chapitres !
   </div>
 
+  <!-- ADD -->
   <div class="add-card">
     <div class="add-toggle" id="addToggle">
       <div class="icon-wrap">+</div>
@@ -411,24 +678,30 @@
     </div>
   </div>
 
+  <!-- SEARCH -->
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
     <input type="text" id="searchInput" placeholder="Rechercher un chapitre ou un thème…" />
   </div>
 
+  <!-- FILTERS -->
   <div class="filter-tabs">
     <button class="filter-tab active" data-filter="all">Tous</button>
     <button class="filter-tab" data-filter="todo">À réviser</button>
     <button class="filter-tab" data-filter="done">Révisés</button>
   </div>
 
+  <!-- LIST -->
   <div id="chapterList"></div>
 </div>
 
+<!-- TOAST -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-  // ===== VOTRE CONFIGURATION FIREBASE (RECOPIÉE ICI) =====
+  // ============================================================
+  // 1. CONFIGURATION FIREBASE (VOS CLÉS)
+  // ============================================================
   const firebaseConfig = {
     apiKey: "AIzaSyAwVb1EtW4M65TcQlCUpS8b7VeaEgCLya0",
     authDomain: "revision-medicale-4a.firebaseapp.com",
@@ -443,9 +716,11 @@
   const db = firebase.database();
   const dataRef = db.ref('/data');
 
-  // ===== DONNÉES INITIALES (complétez avec votre liste exhaustive) =====
+  // ============================================================
+  // 2. DONNÉES INITIALES (CELLES DE VOTRE ANCIEN SITE)
+  // ============================================================
   const DEFAULT_CHAPTERS = [
-    // Cardiologie
+    // Cardiologie (13 chapitres, 0 révisés)
     { name: "HTA essentielle", theme: "Cardiologie", done: false },
     { name: "Crise aiguë hypertensive", theme: "Cardiologie", done: false },
     { name: "Insuffisance mitrale (IM)", theme: "Cardiologie", done: false },
@@ -459,34 +734,19 @@
     { name: "Choc cardiogénique", theme: "Cardiologie", done: false },
     { name: "HTAP", theme: "Cardiologie", done: false },
     { name: "Insuffisance tricuspidienne", theme: "Cardiologie", done: false },
-    // Dermatologie (4 révisés)
+    // Dermatologie (7 chapitres présents dans votre fichier, 4 révisés)
     { name: "Psoriasis", theme: "Dermatologie", done: true },
     { name: "Syphilis", theme: "Dermatologie", done: true },
     { name: "Dermatite atopique", theme: "Dermatologie", done: true },
     { name: "Eczéma de contact", theme: "Dermatologie", done: true },
     { name: "Allergies cutanées", theme: "Dermatologie", done: false },
     { name: "Infections cutanées", theme: "Dermatologie", done: false },
-    { name: "Toxidermie", theme: "Dermatologie", done: false },
-    // Autres thèmes (exemples)
-    { name: "Pneumonie", theme: "Pneumologie", done: false },
-    { name: "Asthme", theme: "Pneumologie", done: false },
-    { name: "BPCO", theme: "Pneumologie", done: false },
-    { name: "Tuberculose", theme: "MALADIE INFECTIEUSE", done: false },
-    { name: "VIH", theme: "MALADIE INFECTIEUSE", done: false },
-    { name: "Paludisme", theme: "MALADIE INFECTIEUSE", done: false },
-    { name: "AVC", theme: "Neurologie", done: false },
-    { name: "Épilepsie", theme: "Neurologie", done: false },
-    { name: "Parkinson", theme: "Neurologie", done: false },
-    { name: "Fracture du fémur", theme: "Traumatologie", done: false },
-    { name: "Entorse", theme: "Traumatologie", done: false },
-    { name: "Luxation", theme: "Traumatologie", done: false },
-    { name: "Dépression", theme: "Psychiatrie", done: false },
-    { name: "Anxiété", theme: "Psychiatrie", done: false },
-    { name: "Polyarthrite rhumatoïde", theme: "Rhumatologie", done: false },
-    { name: "Goutte", theme: "Rhumatologie", done: false },
+    { name: "Toxidermie", theme: "Dermatologie", done: false }
   ];
 
-  // ===== POIDS PAR THÈME =====
+  // ============================================================
+  // 3. SYSTÈME DE POINTS ET PALIERS
+  // ============================================================
   const THEME_WEIGHT = {
     "Dermatologie": 1,
     "MALADIE INFECTIEUSE": 1,
@@ -497,7 +757,6 @@
   };
   function getWeight(theme) { return THEME_WEIGHT[theme] || 1; }
 
-  // ===== PALIERS =====
   const REWARDS = [
     { level: 1, percent: 0.20, amount: 3.125, label: "1er palier" },
     { level: 2, percent: 0.40, amount: 6.25,  label: "2ème palier" },
@@ -506,13 +765,17 @@
     { level: 5, percent: 1.00, amount: 50.00, label: "5ème palier" },
   ];
 
-  // ===== ÉTAT LOCAL =====
+  // ============================================================
+  // 4. ÉTAT LOCAL
+  // ============================================================
   let chapters = [];
   let unlockedLevels = [];
   let totalPoints = 0;
   let earnedPoints = 0;
 
-  // ===== RÉFÉRENCES DOM =====
+  // ============================================================
+  // 5. RÉFÉRENCES DOM
+  // ============================================================
   const $ = id => document.getElementById(id);
   const statTotal = $('statTotal');
   const statDone = $('statDone');
@@ -534,7 +797,9 @@
   const pointsDisplay = $('pointsDisplay');
   const toastContainer = $('toastContainer');
 
-  // ===== FONCTIONS =====
+  // ============================================================
+  // 6. FONCTIONS MÉTIER
+  // ============================================================
   function getWeightForChapter(ch) { return getWeight(ch.theme); }
   function computeTotalPoints(arr) { return arr.reduce((s, ch) => s + getWeightForChapter(ch), 0); }
   function computeEarnedPoints(arr) { return arr.reduce((s, ch) => s + (ch.done ? getWeightForChapter(ch) : 0), 0); }
@@ -555,7 +820,7 @@
     totalPoints = total;
     earnedPoints = earned;
     const pct = total === 0 ? 0 : Math.min(100, Math.round((earned / total) * 100));
-    const circumference = 2 * Math.PI * 37;
+    const circumference = 2 * Math.PI * 37; // ≈ 232.5
     const offset = circumference - (pct / 100) * circumference;
     ringFill.style.strokeDashoffset = offset;
     ringPct.textContent = pct + '%';
@@ -586,7 +851,7 @@
         newly.push(r);
       }
     });
-    unlockedLevels.sort((a,b) => a-b);
+    unlockedLevels.sort((a, b) => a - b);
 
     let html = '';
     REWARDS.forEach(r => {
@@ -599,7 +864,7 @@
           <div class="reward-badge ${badgeClass}">${r.level}</div>
           <div class="reward-info">
             <div class="reward-amount">${r.amount.toFixed(2)} €</div>
-            <div class="reward-desc">${r.label} (${Math.round(r.percent*100)}%)</div>
+            <div class="reward-desc">${r.label} (${Math.round(r.percent * 100)}%)</div>
           </div>
           <div class="reward-status ${statusClass}">${statusText}</div>
         </div>
@@ -672,10 +937,13 @@
       });
       html += `</div></div>`;
     }
-    chapterList.innerHTML = html || '<p style="text-align:center;color:#6b7a8f;padding:20px;">Aucun chapitre trouvé</p>';
+    chapterList.innerHTML = html || '<p style="text-align:center;color:#6b7a8f;padding:24px;">Aucun chapitre trouvé</p>';
     attachEvents();
   }
 
+  // ============================================================
+  // 7. GESTION DES ÉVÉNEMENTS (CRUD)
+  // ============================================================
   function attachEvents() {
     document.querySelectorAll('.custom-cb').forEach(el => {
       el.addEventListener('click', function(e) {
@@ -743,13 +1011,16 @@
     addToggle.classList.remove('open');
   }
 
-  // ===== SYNC AVEC FIREBASE =====
+  // ============================================================
+  // 8. SYNC AVEC FIREBASE
+  // ============================================================
   dataRef.on('value', (snapshot) => {
     const data = snapshot.val();
     if (data) {
       const arr = Object.keys(data).map(key => ({ key, ...data[key] }));
       chapters = arr;
     } else {
+      // Première utilisation : on injecte vos données
       const initialData = {};
       DEFAULT_CHAPTERS.forEach(ch => {
         const key = dataRef.push().key;
@@ -764,7 +1035,9 @@
     renderList();
   });
 
-  // ===== TOAST =====
+  // ============================================================
+  // 9. TOAST NOTIFICATIONS
+  // ============================================================
   function showToast(message) {
     const toast = document.createElement('div');
     toast.className = 'toast show';
@@ -772,18 +1045,22 @@
     toastContainer.appendChild(toast);
     setTimeout(() => {
       toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 300);
-    }, 4000);
+      setTimeout(() => toast.remove(), 350);
+    }, 4500);
   }
 
-  // ===== ÉVÉNEMENTS UI =====
+  // ============================================================
+  // 10. ÉVÉNEMENTS UI
+  // ============================================================
   addToggle.addEventListener('click', () => {
     addForm.classList.toggle('open');
     addToggle.classList.toggle('open');
   });
+
   addChapterBtn.addEventListener('click', () => {
     addChapter(chapterNameInput.value, chapterThemeInput.value);
   });
+
   chapterNameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addChapterBtn.click(); });
   chapterThemeInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addChapterBtn.click(); });
 
