@@ -5,121 +5,187 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Ma Révision Médicale</title>
 
+  <!-- Police Baloo 2 (comme l'original) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <style>
-    /* ===== STYLE IDENTIQUE À L'ANCIEN SITE ===== */
+    /* ============================================================
+       CSS EXACT DE VOTRE ANCIEN SITE (recopié depuis le fichier joint)
+       ============================================================ */
+    :root {
+      --cream: #FFF8F0;
+      --coral: #E05A5A;
+      --coral2: #F07070;
+      --navy: #D4788A;
+      --navy2: #D4788A;
+      --blue: #F0A0B0;
+      --green: #4CAF82;
+      --border: #E8D5C4;
+      --card-bg: #FFFCF8;
+      --text: #2E1A1A;
+      --muted: #8A7A6A;
+      --white: #FFFFFF;
+      --r-lg: 20px;
+      --r-md: 14px;
+      --r-sm: 10px;
+      --shadow: 0 4px 20px rgba(196, 96, 122, 0.10);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      background: #f1f3f8;
-      color: #1a1f2e;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
+      background-color: var(--cream);
       min-height: 100vh;
+      font-family: "Baloo 2", cursive;
+      color: var(--text);
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200, 180, 160, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200, 180, 160, 0.12) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .content {
-      max-width: 700px;
-      width: 100%;
+      position: relative;
+      z-index: 1;
     }
 
-    /* HEADER */
     .header {
-      margin-bottom: 24px;
+      background: var(--navy);
+      padding: 30px 20px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 4px solid var(--coral);
     }
+
+    .header::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--coral) 0px, var(--coral) 10px,
+        transparent 10px, transparent 20px
+      );
+      opacity: 0.4;
+    }
+
     .header h1 {
+      font-family: "Baloo 2", cursive;
+      font-weight: 800;
+      color: white;
       font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      background: linear-gradient(145deg, #1a1f2e 0%, #2c3e50 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
       margin-bottom: 2px;
     }
-    .header-sub {
-      font-size: 0.9rem;
-      color: #6b7a8f;
-      font-weight: 500;
-    }
 
-    /* STATS */
-    .stats-row {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .stat-card {
-      flex: 1;
-      background: #f8faff;
-      border-radius: 20px;
-      padding: 14px 10px;
-      text-align: center;
-      border: 1px solid #eef2f9;
-      transition: transform 0.2s;
-    }
-    .stat-card:hover {
-      transform: translateY(-2px);
-    }
-    .stat-num {
-      font-size: 1.8rem;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-    .stat-card.total .stat-num { color: #1a1f2e; }
-    .stat-card.done .stat-num { color: #2a9d8f; }
-    .stat-card.left .stat-num { color: #e76f51; }
-    .stat-label {
-      font-size: 0.7rem;
+    .header-sub {
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: #6b7a8f;
-      margin-top: 4px;
       font-weight: 600;
     }
 
-    /* PROGRESS RING */
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      padding: 16px 16px 0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 14px 10px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-num {
+      font-family: "Baloo 2", cursive;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .stat-card.total .stat-num { color: var(--navy); }
+    .stat-card.done .stat-num { color: var(--green); }
+    .stat-card.left .stat-num { color: var(--coral); }
+
+    .stat-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
     .progress-section {
       display: flex;
       align-items: center;
-      gap: 20px;
-      background: #f8faff;
-      border-radius: 28px;
-      padding: 16px 20px;
-      margin-bottom: 24px;
-      border: 1px solid #eef2f9;
-      transition: box-shadow 0.3s;
+      justify-content: center;
+      gap: 16px;
+      padding: 16px;
+      max-width: 600px;
+      margin: 0 auto;
     }
+
     .ring-wrap {
       position: relative;
       width: 90px;
       height: 90px;
       flex-shrink: 0;
     }
+
     .ring-wrap svg {
       transform: rotate(-90deg);
     }
+
     .ring-bg {
       fill: none;
-      stroke: #e6edf6;
-      stroke-width: 7;
+      stroke: var(--border);
+      stroke-width: 8;
     }
+
     .ring-fill {
       fill: none;
       stroke: url(#ringGrad);
-      stroke-width: 7;
+      stroke-width: 8;
       stroke-linecap: round;
       transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
     .ring-label {
       position: absolute;
       inset: 0;
@@ -127,69 +193,89 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-weight: 600;
+      font-weight: 800;
+      font-family: "Baloo 2", cursive;
     }
+
     .ring-pct {
-      font-size: 1.2rem;
-      line-height: 1.2;
-      color: #1a1f2e;
+      font-size: 1.35rem;
+      color: var(--navy);
+      line-height: 1;
     }
+
     .ring-sub {
       font-size: 0.5rem;
+      color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #6b7a8f;
-      font-weight: 600;
+      letter-spacing: 0.08em;
     }
+
     .progress-msg {
       flex: 1;
     }
-    .msg-title {
+
+    .progress-msg .msg-title {
+      font-family: "Baloo 2", cursive;
+      font-size: 1.05rem;
       font-weight: 700;
-      font-size: 1.1rem;
-      color: #1a1f2e;
-    }
-    .msg-sub {
-      font-size: 0.85rem;
-      color: #6b7a8f;
+      color: var(--navy);
+      margin-bottom: 4px;
     }
 
-    /* RÉCOMPENSES (NOUVEAU) */
-    .rewards-section {
-      background: #fcf9f0;
-      border-radius: 20px;
-      padding: 16px 18px;
-      margin-bottom: 24px;
-      border: 1px solid #f0ead8;
-      transition: box-shadow 0.3s;
+    .progress-msg .msg-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+      font-weight: 500;
     }
+
+    /* ===== SECTION RÉCOMPENSES (harmonisée avec le style original) ===== */
+    .rewards-section {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow);
+      padding: 14px 18px;
+      margin: 0 14px 14px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     .rewards-title {
+      font-family: "Baloo 2", cursive;
       font-weight: 700;
       font-size: 0.95rem;
-      margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      color: var(--navy);
+      margin-bottom: 8px;
     }
+
     .rewards-title span:last-child {
-      background: #2a9d8f;
+      background: var(--green);
       color: white;
       font-size: 0.7rem;
-      padding: 3px 14px;
-      border-radius: 30px;
-      font-weight: 600;
+      padding: 3px 12px;
+      border-radius: 50px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
     }
+
     .reward-item {
       display: flex;
       align-items: center;
       gap: 10px;
       padding: 6px 0;
-      border-bottom: 1px solid #eee6d4;
+      border-bottom: 1.5px solid rgba(200, 180, 160, 0.3);
       font-size: 0.9rem;
     }
+
     .reward-item:last-child {
       border-bottom: none;
     }
+
     .reward-badge {
       width: 28px;
       height: 28px;
@@ -201,220 +287,234 @@
       font-size: 0.75rem;
       flex-shrink: 0;
     }
+
     .reward-badge.locked {
-      background: #eef2f9;
-      color: #9aa9b9;
+      background: #f0ece6;
+      color: var(--muted);
     }
+
     .reward-badge.unlocked {
-      background: #f4a261;
+      background: var(--coral);
       color: white;
-      box-shadow: 0 2px 8px rgba(244, 162, 97, 0.3);
+      box-shadow: 0 2px 8px rgba(224, 90, 90, 0.3);
     }
+
     .reward-info {
       flex: 1;
     }
+
     .reward-amount {
       font-weight: 700;
-      color: #1a1f2e;
+      color: var(--text);
     }
+
     .reward-desc {
       font-size: 0.7rem;
-      color: #6b7a8f;
+      color: var(--muted);
     }
+
     .reward-status {
       font-size: 0.7rem;
       font-weight: 600;
     }
+
     .reward-status.locked {
-      color: #9aa9b9;
+      color: var(--muted);
     }
+
     .reward-status.unlocked {
-      color: #2a9d8f;
+      color: var(--green);
     }
 
-    /* CONGRATS BANNER */
-    .congrats-banner {
-      display: none;
-      background: #2a9d8f;
-      color: white;
-      font-weight: 600;
-      padding: 14px 18px;
-      border-radius: 40px;
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 0.95rem;
-      box-shadow: 0 4px 12px rgba(42, 157, 143, 0.25);
-      animation: fadeSlide 0.5s ease;
-    }
-    .congrats-banner.show {
-      display: block;
+    /* ===== FIN RÉCOMPENSES ===== */
+
+    .main {
+      padding: 0 14px;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    /* ADD CARD */
     .add-card {
-      background: #f8faff;
-      border-radius: 24px;
-      padding: 12px 16px;
-      margin-bottom: 20px;
-      border: 1px solid #eef2f9;
-      transition: border 0.2s;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow);
+      margin: 14px 0;
+      overflow: hidden;
     }
+
     .add-toggle {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      padding: 15px 18px;
       cursor: pointer;
+      background: rgba(196, 96, 122, 0.04);
       user-select: none;
-      padding: 4px 0;
     }
+
     .add-toggle .icon-wrap {
-      width: 32px;
-      height: 32px;
-      background: #eef2f9;
-      border-radius: 40px;
+      width: 34px;
+      height: 34px;
+      background: var(--navy);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 600;
-      font-size: 1.4rem;
-      color: #1a1f2e;
-      transition: background 0.2s;
+      flex-shrink: 0;
+      font-size: 1.2rem;
+      color: white;
+      font-weight: 700;
     }
-    .add-toggle:hover .icon-wrap {
-      background: #dce3ef;
-    }
+
     .add-toggle .label {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--navy);
       flex: 1;
-      font-weight: 500;
-      color: #1a1f2e;
     }
+
     .add-toggle .chevron {
-      color: #9aa9b9;
-      transition: transform 0.3s;
-      font-size: 0.8rem;
+      color: var(--muted);
+      font-size: 0.75rem;
+      transition: transform 0.25s;
     }
+
     .add-toggle.open .chevron {
       transform: rotate(180deg);
     }
+
     .add-form {
       display: none;
-      padding-top: 16px;
+      padding: 0 18px 18px;
       flex-direction: column;
       gap: 12px;
     }
+
     .add-form.open {
       display: flex;
     }
+
     .field-group {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-    }
-    .field-label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #4a5a6e;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-    .field-group input {
-      padding: 10px 14px;
-      border-radius: 16px;
-      border: 1px solid #dce3ef;
-      background: white;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border 0.2s, box-shadow 0.2s;
-      font-family: inherit;
-    }
-    .field-group input:focus {
-      border-color: #7b8ba0;
-      box-shadow: 0 0 0 3px rgba(123, 139, 160, 0.1);
-    }
-    .btn-add {
-      background: #1a1f2e;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      font-family: inherit;
-      margin-top: 4px;
-    }
-    .btn-add:hover {
-      background: #2c3e50;
-    }
-    .btn-add:active {
-      transform: scale(0.98);
+      gap: 5px;
     }
 
-    /* SEARCH */
+    .field-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding-left: 2px;
+    }
+
+    input[type="text"] {
+      border: 2px solid var(--border);
+      border-radius: var(--r-sm);
+      font-family: "Baloo 2", cursive;
+      font-size: 0.95rem;
+      outline: none;
+      padding: 11px 15px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+      background: white;
+      color: var(--text);
+      appearance: none;
+    }
+
+    input[type="text"]::placeholder {
+      color: #c4b4a4;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 4px rgba(196, 96, 122, 0.1);
+    }
+
+    .btn-add {
+      background: var(--navy);
+      border: none;
+      border-radius: var(--r-sm);
+      color: white;
+      cursor: pointer;
+      font-family: "Baloo 2", cursive;
+      font-size: 0.97rem;
+      font-weight: 700;
+      min-height: 48px;
+      padding: 11px;
+      transition: opacity 0.2s, transform 0.15s;
+      width: 100%;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 14px rgba(196, 96, 122, 0.25);
+    }
+
+    .btn-add:active {
+      opacity: 0.88;
+      transform: scale(0.97);
+    }
+
     .search-wrap {
       position: relative;
-      margin-bottom: 16px;
-    }
-    .search-icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #9aa9b9;
-      font-size: 0.9rem;
-    }
-    .search-wrap input {
-      width: 100%;
-      padding: 12px 16px 12px 44px;
-      border-radius: 40px;
-      border: 1px solid #dce3ef;
-      background: white;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border 0.2s, box-shadow 0.2s;
-      font-family: inherit;
-    }
-    .search-wrap input:focus {
-      border-color: #7b8ba0;
-      box-shadow: 0 0 0 3px rgba(123, 139, 160, 0.08);
+      margin-bottom: 10px;
     }
 
-    /* FILTER TABS */
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      pointer-events: none;
+      color: var(--muted);
+    }
+
+    #searchInput {
+      padding-left: 40px;
+    }
+
     .filter-tabs {
       display: flex;
       gap: 8px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .filter-tab {
-      padding: 6px 18px;
-      border-radius: 30px;
-      border: 1px solid #dce3ef;
-      background: transparent;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: inherit;
-      color: #4a5a6e;
-    }
-    .filter-tab.active {
-      background: #1a1f2e;
-      color: white;
-      border-color: #1a1f2e;
-    }
-    .filter-tab:hover {
-      background: #eef2f9;
-    }
-    .filter-tab.active:hover {
-      background: #2c3e50;
+      margin-bottom: 14px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
     }
 
-    /* LIST */
-    .theme-section {
-      margin-bottom: 24px;
+    .filter-tabs::-webkit-scrollbar {
+      display: none;
     }
+
+    .filter-tab {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 50px;
+      color: var(--navy);
+      cursor: pointer;
+      font-family: "Baloo 2", cursive;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 7px 16px;
+      white-space: nowrap;
+      transition: 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .filter-tab.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+      box-shadow: 0 4px 12px rgba(196, 96, 122, 0.25);
+    }
+
+    .theme-section {
+      margin-bottom: 18px;
+    }
+
     .theme-header {
       display: flex;
       align-items: center;
@@ -422,31 +522,39 @@
       margin-bottom: 8px;
       padding: 0 4px;
     }
+
     .theme-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 20px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
       flex-shrink: 0;
     }
+
     .theme-title {
-      font-weight: 600;
-      font-size: 1rem;
-      color: #1a1f2e;
+      font-family: "Baloo 2", cursive;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--navy);
+      flex: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
+
     .theme-badge {
-      margin-left: auto;
-      font-size: 0.75rem;
-      background: #eef2f9;
-      padding: 2px 12px;
-      border-radius: 30px;
-      font-weight: 600;
-      color: #4a5a6e;
+      background: var(--navy);
+      border-radius: 50px;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      letter-spacing: 0.04em;
     }
+
     .theme-card {
-      background: #fafcff;
-      border-radius: 20px;
-      padding: 4px 0;
-      border: 1px solid #eef2f9;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow);
       overflow: hidden;
     }
 
@@ -454,134 +562,205 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 12px 16px;
-      border-bottom: 1px solid #f0f4fc;
+      min-height: 54px;
+      padding: 10px 14px;
+      border-bottom: 1.5px solid rgba(200, 180, 160, 0.3);
       transition: background 0.15s;
+      position: relative;
     }
+
     .chapter-item:last-child {
       border-bottom: none;
     }
-    .chapter-item:hover {
-      background: #f5f9ff;
+
+    .chapter-item:active {
+      background: rgba(196, 96, 122, 0.04);
     }
+
+    .chapter-item.is-done {
+      background: rgba(76, 175, 130, 0.04);
+    }
+
     .custom-cb {
-      width: 24px;
-      height: 24px;
-      border-radius: 30px;
-      border: 2px solid #d0d9e8;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      background: white;
       flex-shrink: 0;
       cursor: pointer;
-      transition: all 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.8rem;
-      color: white;
-      background: white;
+      transition: 0.2s;
+      position: relative;
     }
-    .custom-cb:hover {
-      border-color: #2a9d8f;
-      transform: scale(1.05);
-    }
+
     .custom-cb.checked {
-      background: #2a9d8f;
-      border-color: #2a9d8f;
-      animation: pop 0.2s ease;
+      background: linear-gradient(135deg, var(--green), #3CB870);
+      border-color: transparent;
+      box-shadow: 0 3px 10px rgba(76, 175, 130, 0.4);
     }
+
     .custom-cb.checked::after {
-      content: "✓";
-      color: white;
-      font-weight: 700;
+      content: "";
+      width: 6px;
+      height: 11px;
+      border: solid white;
+      border-width: 0 2.5px 2.5px 0;
+      transform: rotate(42deg) translate(-1px, -1px);
+      display: block;
     }
+
+    .chapter-item input[type="checkbox"] {
+      display: none;
+    }
+
     .chapter-name {
       flex: 1;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: var(--text);
       font-weight: 500;
-      font-size: 0.95rem;
-      color: #1a1f2e;
+      transition: color 0.2s;
+      word-break: break-word;
     }
+
     .chapter-name.done {
-      text-decoration: line-through;
-      color: #9aa9b9;
+      color: var(--muted);
+      text-decoration: line-through rgba(138, 122, 106, 0.5);
     }
+
+    .chapter-edit-input {
+      flex: 1;
+      border: 2px solid var(--navy);
+      border-radius: 8px;
+      font-family: "Baloo 2", cursive;
+      font-size: 0.88rem;
+      padding: 6px 10px;
+      outline: none;
+      background: white;
+      color: var(--text);
+      box-shadow: 0 0 0 4px rgba(196, 96, 122, 0.1);
+    }
+
     .btn-actions {
       display: flex;
-      gap: 2px;
+      gap: 4px;
       flex-shrink: 0;
     }
+
     .btn-icon {
-      background: transparent;
+      background: none;
       border: none;
-      font-size: 1.1rem;
-      padding: 4px 6px;
-      border-radius: 30px;
+      border-radius: 8px;
       cursor: pointer;
-      color: #7b8ba0;
-      transition: background 0.2s, color 0.2s;
-      line-height: 1;
-    }
-    .btn-icon:hover {
-      background: #eef2f9;
-      color: #1a1f2e;
-    }
-    .btn-icon.del:hover {
-      color: #e76f51;
-      background: #fef0ec;
+      font-size: 1rem;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, transform 0.1s;
+      color: var(--muted);
     }
 
-    /* TOAST */
-    .toast-container {
+    .btn-icon:active {
+      transform: scale(0.9);
+    }
+
+    .btn-icon.edit:active {
+      background: rgba(196, 96, 122, 0.1);
+    }
+
+    .btn-icon.save {
+      color: var(--green);
+    }
+
+    .btn-icon.save:active {
+      background: rgba(76, 175, 130, 0.12);
+    }
+
+    .btn-icon.cancel {
+      color: #999;
+    }
+
+    .btn-icon.del:active {
+      background: rgba(224, 90, 90, 0.1);
+    }
+
+    .btn-icon.del {
+      color: #c9a0a0;
+    }
+
+    /* TOAST (harmonisé) */
+    .toast {
       position: fixed;
-      bottom: 24px;
+      bottom: 28px;
       left: 50%;
-      transform: translateX(-50%);
-      z-index: 999;
-      max-width: 90%;
+      transform: translateX(-50%) translateY(90px);
+      background: var(--navy);
+      color: white;
+      padding: 13px 22px;
+      border-radius: 50px;
+      font-family: "Baloo 2", cursive;
+      font-size: 0.87rem;
+      font-weight: 600;
+      z-index: 9999;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      white-space: nowrap;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
       pointer-events: none;
     }
-    .toast {
-      background: #1a1f2e;
-      color: white;
-      padding: 14px 28px;
-      border-radius: 40px;
-      font-weight: 600;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-      pointer-events: auto;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-      font-size: 0.95rem;
-    }
+
     .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .toast .highlight {
-      color: #f4a261;
+      transform: translateX(-50%) translateY(0);
     }
 
-    /* ANIMATIONS */
-    @keyframes pop {
-      0% { transform: scale(0.8); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
-    @keyframes fadeSlide {
-      0% { opacity: 0; transform: translateY(-8px); }
-      100% { opacity: 1; transform: translateY(0); }
+    .empty {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--muted);
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 500px) {
-      body { padding: 12px; }
-      .stats-row { gap: 6px; }
-      .stat-card { padding: 10px 6px; }
-      .stat-num { font-size: 1.4rem; }
-      .progress-section { flex-wrap: wrap; justify-content: center; gap: 12px; }
-      .ring-wrap { width: 72px; height: 72px; }
-      .ring-pct { font-size: 1rem; }
+    .empty .search-big {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .empty p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    .congrats-banner {
+      background: linear-gradient(135deg, var(--green), #3CB870);
+      border-radius: var(--r-md);
+      color: white;
+      font-weight: 700;
+      font-family: "Baloo 2", cursive;
+      font-size: 0.92rem;
+      padding: 14px 18px;
+      text-align: center;
+      margin-bottom: 14px;
+      box-shadow: 0 6px 24px rgba(76, 175, 130, 0.3);
+      display: none;
+      letter-spacing: 0.03em;
+    }
+
+    .congrats-banner.show {
+      display: block;
+    }
+
+    .divider {
+      border-top: 2px dashed var(--border);
+      margin: 4px 0 12px;
+    }
+
+    @media (max-width: 360px) {
       .header h1 { font-size: 1.6rem; }
-      .chapter-item { padding: 10px 12px; flex-wrap: wrap; }
-      .btn-actions { gap: 0; }
+      .stat-num { font-size: 1.8rem; }
     }
   </style>
 </head>
@@ -594,23 +773,23 @@
     <div class="header-sub">Tableau de bord · 4ème année 2025/2026</div>
   </header>
 
-  <!-- STATS -->
+  <!-- STATS ROW -->
   <div class="stats-row">
     <div class="stat-card total">
-      <div class="stat-num" id="statTotal">0</div>
+      <div class="stat-num" id="statTotal">156</div>
       <div class="stat-label">Total</div>
     </div>
     <div class="stat-card done">
-      <div class="stat-num" id="statDone">0</div>
+      <div class="stat-num" id="statDone">11</div>
       <div class="stat-label">Révisés</div>
     </div>
     <div class="stat-card left">
-      <div class="stat-num" id="statLeft">0</div>
+      <div class="stat-num" id="statLeft">145</div>
       <div class="stat-label">Restants</div>
     </div>
   </div>
 
-  <!-- PROGRESS -->
+  <!-- PROGRESS RING -->
   <div class="progress-section">
     <div class="ring-wrap">
       <svg viewBox="0 0 90 90" width="90" height="90">
@@ -624,13 +803,13 @@
         <circle class="ring-fill" id="ringFill" cx="45" cy="45" r="37" stroke-dasharray="232.5" stroke-dashoffset="232.5" />
       </svg>
       <div class="ring-label">
-        <span class="ring-pct" id="ringPct">0%</span>
+        <span class="ring-pct" id="ringPct">7%</span>
         <span class="ring-sub">Avancement</span>
       </div>
     </div>
     <div class="progress-msg">
-      <div class="msg-title" id="motivMsg">Bienvenue !</div>
-      <div class="msg-sub" id="motivSub">Commence tes révisions 💪</div>
+      <div class="msg-title" id="motivMsg">Belle entrée en matière</div>
+      <div class="msg-sub" id="motivSub">Tu as bien démarré, continue !</div>
     </div>
   </div>
 
@@ -643,12 +822,12 @@
     <div id="rewardsList"></div>
   </div>
 
-  <!-- CONGRATS -->
+  <!-- CONGRATS BANNER -->
   <div class="congrats-banner" id="congratsBanner">
     Bravo ! Tu as révisé tous les chapitres !
   </div>
 
-  <!-- ADD -->
+  <!-- ADD FORM -->
   <div class="add-card">
     <div class="add-toggle" id="addToggle">
       <div class="icon-wrap">+</div>
@@ -684,7 +863,7 @@
     <input type="text" id="searchInput" placeholder="Rechercher un chapitre ou un thème…" />
   </div>
 
-  <!-- FILTERS -->
+  <!-- FILTER TABS -->
   <div class="filter-tabs">
     <button class="filter-tab active" data-filter="all">Tous</button>
     <button class="filter-tab" data-filter="todo">À réviser</button>
@@ -696,12 +875,12 @@
 </div>
 
 <!-- TOAST -->
-<div class="toast-container" id="toastContainer"></div>
+<div class="toast" id="toast"></div>
 
 <script>
-  // ============================================================
+  // ================================================================
   // 1. CONFIGURATION FIREBASE (VOS CLÉS)
-  // ============================================================
+  // ================================================================
   const firebaseConfig = {
     apiKey: "AIzaSyAwVb1EtW4M65TcQlCUpS8b7VeaEgCLya0",
     authDomain: "revision-medicale-4a.firebaseapp.com",
@@ -716,37 +895,187 @@
   const db = firebase.database();
   const dataRef = db.ref('/data');
 
-  // ============================================================
-  // 2. DONNÉES INITIALES (CELLES DE VOTRE ANCIEN SITE)
-  // ============================================================
+  // ================================================================
+  // 2. DONNÉES INITIALES (LES 156 CHAPITRES AVEC LEURS STATUTS)
+  //    Extraites du fichier joint "Ma Révision Médicale (1).html"
+  // ================================================================
   const DEFAULT_CHAPTERS = [
-    // Cardiologie (13 chapitres, 0 révisés)
+    // ---- Cardiologie (13, 0 révisés) ----
     { name: "HTA essentielle", theme: "Cardiologie", done: false },
     { name: "Crise aiguë hypertensive", theme: "Cardiologie", done: false },
     { name: "Insuffisance mitrale (IM)", theme: "Cardiologie", done: false },
     { name: "Rétrécissement mitral (RM)", theme: "Cardiologie", done: false },
     { name: "Athérome", theme: "Cardiologie", done: false },
     { name: "SCC (Syndrome coronarien chronique)", theme: "Cardiologie", done: false },
-    { name: "SCA ST–", theme: "Cardiologie", done: false },
-    { name: "SCA ST•", theme: "Cardiologie", done: false },
+    { name: "SCA ST⊖", theme: "Cardiologie", done: false },
+    { name: "SCA ST⊕", theme: "Cardiologie", done: false },
     { name: "ICCons (Insuffisance cardiaque congestive)", theme: "Cardiologie", done: false },
     { name: "OAP cardiogenique", theme: "Cardiologie", done: false },
     { name: "Choc cardiogénique", theme: "Cardiologie", done: false },
     { name: "HTAP", theme: "Cardiologie", done: false },
     { name: "Insuffisance tricuspidienne", theme: "Cardiologie", done: false },
-    // Dermatologie (7 chapitres présents dans votre fichier, 4 révisés)
+
+    // ---- Dermatologie (14, 4 révisés) ----
     { name: "Psoriasis", theme: "Dermatologie", done: true },
     { name: "Syphilis", theme: "Dermatologie", done: true },
     { name: "Dermatite atopique", theme: "Dermatologie", done: true },
     { name: "Eczéma de contact", theme: "Dermatologie", done: true },
     { name: "Allergies cutanées", theme: "Dermatologie", done: false },
     { name: "Infections cutanées", theme: "Dermatologie", done: false },
-    { name: "Toxidermie", theme: "Dermatologie", done: false }
+    { name: "Toxidermie", theme: "Dermatologie", done: false },
+    { name: "Chromoblastomycose", theme: "Dermatologie", done: false },
+    { name: "Lèpre", theme: "Dermatologie", done: false },
+    { name: "Ulcérations bucco-génitales", theme: "Dermatologie", done: false },
+    { name: "Érythrodermie", theme: "Dermatologie", done: false },
+    { name: "Grosse jambe rouge aiguë", theme: "Dermatologie", done: false },
+    { name: "Érythème noueux", theme: "Dermatologie", done: false },
+    { name: "Gale (scabiose)", theme: "Dermatologie", done: false },
+
+    // ---- MALADIE INFECTIEUSE (24, 0 révisés) ----
+    { name: "Généralité sur la prévention et contrôle des infections", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Hygiène des mains", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Tenue de soignant", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Les précautions complémentaires d'hygiène", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Diarrhée aiguë fébrile", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Fièvre typhoïde", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Tétanos", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Bilharziose", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Peste", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Méningite et méningite encéphalites infectieuses", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Méningite virale", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Méningo encéphalite à liquide clair", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Paludisme", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Endocardite infectieuse", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Ascaridiose, anguillulose, taenisis", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Amibiase", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Toxoplasmose", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Rage", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Infections urinaires", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "AES", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "Arbovirose (dingue, ?)", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "PAC", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "IST", theme: "MALADIE INFECTIEUSE", done: false },
+    { name: "VIH", theme: "MALADIE INFECTIEUSE", done: false },
+
+    // ---- Neurologie (33, 2 révisés) ----
+    { name: "AVC ischémique", theme: "Neurologie", done: true },
+    { name: "Migraine", theme: "Neurologie", done: false },
+    { name: "Épilepsie", theme: "Neurologie", done: false },
+    { name: "Névralgie du trijumeau", theme: "Neurologie", done: true },
+    { name: "Maladie de Parkinson", theme: "Neurologie", done: false },
+    { name: "Maladie d'Alzheimer", theme: "Neurologie", done: false },
+    { name: "Démence — PEC", theme: "Neurologie", done: false },
+    { name: "PEC mvt anormaux", theme: "Neurologie", done: false },
+    { name: "PEC hémiplégie", theme: "Neurologie", done: false },
+    { name: "Confusion mentale et PEC", theme: "Neurologie", done: false },
+    { name: "Neurocysticercose", theme: "Neurologie", done: false },
+    { name: "Myelite transverse aiguë", theme: "Neurologie", done: false },
+    { name: "SEP (Sclérose en plaques)", theme: "Neurologie", done: false },
+    { name: "Neuropathie diabétique (sd GB)", theme: "Neurologie", done: false },
+    { name: "PEC tb de la déglutition", theme: "Neurologie", done: false },
+    { name: "PEC d'une fatigabilité à l'effort", theme: "Neurologie", done: false },
+    { name: "Sclérose latérale amyotrophique", theme: "Neurologie", done: false },
+    { name: "Anomalie du LCR", theme: "Neurologie", done: false },
+    { name: "PEC syndrome myogène", theme: "Neurologie", done: false },
+    { name: "TVC (Thrombose veineuse cérébrale)", theme: "Neurologie", done: false },
+    { name: "Syndrome méningé spontané", theme: "Neurologie", done: false },
+    { name: "Pathologies radiculaires et tronculaires", theme: "Neurologie", done: false },
+    { name: "AVC hémorragique", theme: "Neurologie", done: false },
+    { name: "Encéphalopathie de Wernicke", theme: "Neurologie", done: false },
+    { name: "PEC céphalée", theme: "Neurologie", done: false },
+    { name: "Neurosyphilis", theme: "Neurologie", done: false },
+    { name: "Myasthénie auto-immune", theme: "Neurologie", done: false },
+    { name: "Polynévrite", theme: "Neurologie", done: false },
+    { name: "Polyradiculonévrite aiguë (sd de GB)", theme: "Neurologie", done: false },
+    { name: "PEC douleurs neuropathiques", theme: "Neurologie", done: false },
+    { name: "Hemorragie méningée spontanée", theme: "Neurologie", done: false },
+    { name: "Coeur pulmonaire chronique", theme: "Neurologie", done: false },
+    { name: "Généralité sur la tuberculose", theme: "Neurologie", done: false },
+
+    // ---- Pneumologie (29, 2 révisés) ----
+    { name: "PAC (Pneumonie aiguë communautaire)", theme: "Pneumologie", done: false },
+    { name: "Dilatation des bronches (DDB)", theme: "Pneumologie", done: false },
+    { name: "Pneumopathies interstitielles diffuses", theme: "Pneumologie", done: false },
+    { name: "Manifestation pulmonaire des connectivites", theme: "Pneumologie", done: false },
+    { name: "Insuffisance respiratoire aiguë", theme: "Pneumologie", done: false },
+    { name: "Aspergillose broncho pulmonaire", theme: "Pneumologie", done: false },
+    { name: "Staphylococcie pleuropulmonaire", theme: "Pneumologie", done: false },
+    { name: "TB pulmonaire commune", theme: "Pneumologie", done: false },
+    { name: "TB extra-pulmonaire", theme: "Pneumologie", done: false },
+    { name: "TB grave", theme: "Pneumologie", done: false },
+    { name: "TB et VIH", theme: "Pneumologie", done: true },
+    { name: "Moyen de diagnostic de la TB", theme: "Pneumologie", done: false },
+    { name: "Traitement de la TB pulm.", theme: "Pneumologie", done: false },
+    { name: "TB multirésistante", theme: "Pneumologie", done: true },
+    { name: "Pneumoconioses", theme: "Pneumologie", done: false },
+    { name: "OAP lésionnel / SDRA", theme: "Pneumologie", done: false },
+    { name: "BPCO", theme: "Pneumologie", done: false },
+    { name: "Embolie pulmonaire", theme: "Pneumologie", done: false },
+    { name: "Pleurésie", theme: "Pneumologie", done: false },
+    { name: "Cancer broncho-pulm. médicale", theme: "Pneumologie", done: false },
+    { name: "Asthme", theme: "Pneumologie", done: false },
+    { name: "Infection respiratoire basse aiguë", theme: "Pneumologie", done: false },
+    { name: "Abcès pulmonaire", theme: "Pneumologie", done: false },
+    { name: "Oedème pulmonaire", theme: "Pneumologie", done: false },
+    { name: "Manifestation respiratoire au cours de l'infection par le VIH", theme: "Pneumologie", done: false },
+    { name: "Pneumothorax", theme: "Pneumologie", done: false },
+    { name: "Pathologie médiastinale", theme: "Pneumologie", done: false },
+    { name: "Syndrome apnée du sommeil", theme: "Pneumologie", done: false },
+    { name: "Traitement tuberculose", theme: "Pneumologie", done: false },
+
+    // ---- Psychiatrie (17, 1 révisé) ----
+    { name: "Complications neuropsy de l'alcoolisme", theme: "Psychiatrie", done: false },
+    { name: "Suicide et crise suicidaire", theme: "Psychiatrie", done: false },
+    { name: "Hystérie", theme: "Psychiatrie", done: false },
+    { name: "Crises d'angoisse aiguë", theme: "Psychiatrie", done: false },
+    { name: "TAG (Trouble anxieux généralisé)", theme: "Psychiatrie", done: false },
+    { name: "BDA (Bouffée délirante aiguë)", theme: "Psychiatrie", done: false },
+    { name: "Confusion mentale — troubles", theme: "Psychiatrie", done: false },
+    { name: "Schizophrénie", theme: "Psychiatrie", done: false },
+    { name: "Psychose paranoïaque", theme: "Psychiatrie", done: false },
+    { name: "Psychose hallucinatoire chronique", theme: "Psychiatrie", done: true },
+    { name: "Dépression ou épisode dépressif caractérisé", theme: "Psychiatrie", done: false },
+    { name: "Accès maniaque", theme: "Psychiatrie", done: false },
+    { name: "Paraphrénie", theme: "Psychiatrie", done: false },
+    { name: "États névrotique (hystérie et TAG)", theme: "Psychiatrie", done: false },
+    { name: "Généralité sur les névroses", theme: "Psychiatrie", done: false },
+    { name: "Les pathologies psychiatriques", theme: "Psychiatrie", done: false },
+    { name: "Troubles psychiques de la grossesse et du post partum", theme: "Psychiatrie", done: false },
+
+    // ---- Rhumatologie (13, 1 révisé) ----
+    { name: "Rhumatisme microcristalline", theme: "Rhumatologie", done: false },
+    { name: "Spondylarthrite inflammatoire", theme: "Rhumatologie", done: false },
+    { name: "Goutte", theme: "Rhumatologie", done: false },
+    { name: "Arthrite juvénile idiopathique", theme: "Rhumatologie", done: false },
+    { name: "Généralité sur arthrose des membres", theme: "Rhumatologie", done: false },
+    { name: "Gonarthrose", theme: "Rhumatologie", done: false },
+    { name: "Coxarthrose", theme: "Rhumatologie", done: false },
+    { name: "Arthrose digitale", theme: "Rhumatologie", done: false },
+    { name: "Ostéoporose", theme: "Rhumatologie", done: true },
+    { name: "Lombosciatique et lombalgie", theme: "Rhumatologie", done: false },
+    { name: "Généralité sur les tendinopathies", theme: "Rhumatologie", done: false },
+    { name: "Infections ostéo articulaires (arthrite septique)", theme: "Rhumatologie", done: false },
+    { name: "Spondylodiscite infectieuse à germes banales", theme: "Rhumatologie", done: false },
+
+    // ---- Traumatologie (13, 1 révisé) ----
+    { name: "Pathologie de la coiffe des rotateurs", theme: "Traumatologie", done: false },
+    { name: "Ostéoarthrite TB", theme: "Traumatologie", done: false },
+    { name: "Traitement chir. de la gonarthrose", theme: "Traumatologie", done: false },
+    { name: "Traitement chir. de la coxarthrose", theme: "Traumatologie", done: false },
+    { name: "Sd de Legg-Perthes-Calphé", theme: "Traumatologie", done: false },
+    { name: "Luxation congénitale de la hanche", theme: "Traumatologie", done: true },
+    { name: "Épiphysiolyse fémorale supérieure", theme: "Traumatologie", done: false },
+    { name: "Ostéosarcome", theme: "Traumatologie", done: false },
+    { name: "Tumeur osseuse chez l'enfant", theme: "Traumatologie", done: false },
+    { name: "Ostéomyélite aiguë", theme: "Traumatologie", done: false },
+    { name: "Fracture chez l'enfant", theme: "Traumatologie", done: false },
+    { name: "Pied bot", theme: "Traumatologie", done: false },
+    { name: "Omarthrose", theme: "Traumatologie", done: false }
   ];
 
-  // ============================================================
+  // ================================================================
   // 3. SYSTÈME DE POINTS ET PALIERS
-  // ============================================================
+  // ================================================================
   const THEME_WEIGHT = {
     "Dermatologie": 1,
     "MALADIE INFECTIEUSE": 1,
@@ -759,23 +1088,23 @@
 
   const REWARDS = [
     { level: 1, percent: 0.20, amount: 3.125, label: "1er palier" },
-    { level: 2, percent: 0.40, amount: 6.25,  label: "2ème palier" },
+    { level: 2, percent: 0.40, amount: 6.25, label: "2ème palier" },
     { level: 3, percent: 0.60, amount: 12.50, label: "3ème palier" },
     { level: 4, percent: 0.80, amount: 25.00, label: "4ème palier" },
     { level: 5, percent: 1.00, amount: 50.00, label: "5ème palier" },
   ];
 
-  // ============================================================
+  // ================================================================
   // 4. ÉTAT LOCAL
-  // ============================================================
+  // ================================================================
   let chapters = [];
   let unlockedLevels = [];
   let totalPoints = 0;
   let earnedPoints = 0;
 
-  // ============================================================
+  // ================================================================
   // 5. RÉFÉRENCES DOM
-  // ============================================================
+  // ================================================================
   const $ = id => document.getElementById(id);
   const statTotal = $('statTotal');
   const statDone = $('statDone');
@@ -795,11 +1124,11 @@
   const chapterThemeInput = $('chapterTheme');
   const rewardsList = $('rewardsList');
   const pointsDisplay = $('pointsDisplay');
-  const toastContainer = $('toastContainer');
+  const toast = $('toast');
 
-  // ============================================================
-  // 6. FONCTIONS MÉTIER
-  // ============================================================
+  // ================================================================
+  // 6. FONCTIONS
+  // ================================================================
   function getWeightForChapter(ch) { return getWeight(ch.theme); }
   function computeTotalPoints(arr) { return arr.reduce((s, ch) => s + getWeightForChapter(ch), 0); }
   function computeEarnedPoints(arr) { return arr.reduce((s, ch) => s + (ch.done ? getWeightForChapter(ch) : 0), 0); }
@@ -901,15 +1230,15 @@
     for (const [theme, items] of Object.entries(groups)) {
       const doneCount = items.filter(i => i.done).length;
       const totalCount = items.length;
-      let dotColor = '#7b8ba0';
+      let dotColor = '#D4788A'; // couleur par défaut (navy)
       if (theme === 'Cardiologie') dotColor = '#E05A5A';
       else if (theme === 'Dermatologie') dotColor = '#C4607A';
-      else if (theme === 'MALADIE INFECTIEUSE') dotColor = '#2a9d8f';
-      else if (theme === 'Neurologie') dotColor = '#e9c46a';
-      else if (theme === 'Pneumologie') dotColor = '#4a9fb5';
-      else if (theme === 'Traumatologie') dotColor = '#e76f51';
-      else if (theme === 'Psychiatrie') dotColor = '#9b5de5';
-      else if (theme === 'Rhumatologie') dotColor = '#f4a261';
+      else if (theme === 'MALADIE INFECTIEUSE') dotColor = '#F0A0B0';
+      else if (theme === 'Neurologie') dotColor = '#4CAF82';
+      else if (theme === 'Pneumologie') dotColor = '#E67E22';
+      else if (theme === 'Psychiatrie') dotColor = '#8E44AD';
+      else if (theme === 'Rhumatologie') dotColor = '#C0392B';
+      else if (theme === 'Traumatologie') dotColor = '#16A085';
 
       html += `
         <div class="theme-section">
@@ -937,13 +1266,13 @@
       });
       html += `</div></div>`;
     }
-    chapterList.innerHTML = html || '<p style="text-align:center;color:#6b7a8f;padding:24px;">Aucun chapitre trouvé</p>';
+    chapterList.innerHTML = html || '<div class="empty"><div class="search-big">📭</div><p>Aucun chapitre trouvé</p></div>';
     attachEvents();
   }
 
-  // ============================================================
+  // ================================================================
   // 7. GESTION DES ÉVÉNEMENTS (CRUD)
-  // ============================================================
+  // ================================================================
   function attachEvents() {
     document.querySelectorAll('.custom-cb').forEach(el => {
       el.addEventListener('click', function(e) {
@@ -1011,16 +1340,16 @@
     addToggle.classList.remove('open');
   }
 
-  // ============================================================
+  // ================================================================
   // 8. SYNC AVEC FIREBASE
-  // ============================================================
+  // ================================================================
   dataRef.on('value', (snapshot) => {
     const data = snapshot.val();
     if (data) {
       const arr = Object.keys(data).map(key => ({ key, ...data[key] }));
       chapters = arr;
     } else {
-      // Première utilisation : on injecte vos données
+      // Première ouverture : on injecte les 156 chapitres
       const initialData = {};
       DEFAULT_CHAPTERS.forEach(ch => {
         const key = dataRef.push().key;
@@ -1035,23 +1364,21 @@
     renderList();
   });
 
-  // ============================================================
-  // 9. TOAST NOTIFICATIONS
-  // ============================================================
+  // ================================================================
+  // 9. TOAST
+  // ================================================================
   function showToast(message) {
-    const toast = document.createElement('div');
-    toast.className = 'toast show';
-    toast.innerHTML = message;
-    toastContainer.appendChild(toast);
-    setTimeout(() => {
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
       toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 350);
-    }, 4500);
+    }, 4000);
   }
 
-  // ============================================================
+  // ================================================================
   // 10. ÉVÉNEMENTS UI
-  // ============================================================
+  // ================================================================
   addToggle.addEventListener('click', () => {
     addForm.classList.toggle('open');
     addToggle.classList.toggle('open');
